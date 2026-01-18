@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>BCS FY Semester 1 Notes | APNA SEM</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="BCS FY Semester 1 syllabus-based notes PDF. Easy, exam-focused notes prepared by APNA SEM.">
+
+<style>
+/* ====== GLOBAL ====== */
+* { margin:0; padding:0; box-sizing:border-box; font-family:"Segoe UI", Arial, sans-serif; }
+body { background:#f1f5f9; color:#1e293b; }
+
+/* ====== NAVBAR ====== */
+.navbar {
+  display:flex; justify-content:space-between; align-items:center;
+  padding:12px 20px; background:#2563eb; color:white;
+  position:fixed; width:100%; top:0; z-index:1000;
+}
+.brand { display:flex; align-items:center; gap:12px; }
+.logo-img { width:50px; height:50px; border-radius:50%; background:white; padding:3px; }
+.brand-text { display:flex; flex-direction:column; line-height:1.2; }
+.logo-text { font-size:20px; font-weight:700; }
+.logo-text span { color:#ffeb3b; }
+.sub-text { font-size:12px; opacity:0.9; }
+
+.nav-links { display:flex; gap:18px; }
+.nav-links a { color:white; text-decoration:none; font-weight:600; }
+.menu-icon { display:none; font-size:28px; cursor:pointer; }
+
+/* MOBILE MENU */
+.mobile-menu {
+  position:fixed; top:0; right:-100%; width:70%; height:100vh;
+  background:#83adf7; padding:25px; transition:0.3s; z-index:2000;
+  border-left:4px solid #1e40af;
+}
+.mobile-menu.active { right:0; }
+.mobile-menu a { display:block; margin:18px 0; font-size:18px; color:#1e293b; text-decoration:none; }
+.close-btn {
+  background:#1e40af; color:white; border:none; padding:10px 16px; border-radius:8px;
+  margin-bottom:20px; cursor:pointer;
+}
+
+/* ====== NOTES HEADER ====== */
+header.notes-header {
+  background: linear-gradient(135deg,#243e75,#0530bca1);
+  color:#fff; padding:25px; text-align:center; margin-top:80px; border-radius:0 0 20px 20px;
+}
+header.notes-header h1 { font-size:26px; }
+header.notes-header p { margin-top:6px; font-size:14px; opacity:0.9; }
+
+/* ====== CONTENT ====== */
+.container { max-width:1100px; margin:40px auto; padding:0 20px; }
+.intro { text-align:center; margin-bottom:35px; }
+.intro p { font-size:16px; color:#334155; }
+
+.subjects {
+  display:grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap:20px;
+}
+.subject-card {
+  background:#fff; border-radius:16px; padding:22px;
+  box-shadow:0 6px 18px rgba(0,0,0,0.08); transition:0.3s;
+}
+.subject-card:hover { transform:translateY(-6px); }
+.subject-card h3 { font-size:20px; color:#1e40af; margin-bottom:10px; }
+.subject-card p { font-size:14px; color:#475569; margin-bottom:16px; line-height:1.5; }
+.download-btn {
+  display:inline-block; text-decoration:none;
+  background: linear-gradient(135deg,#2563eb,#1e40af); color:#fff;
+  padding:10px 20px; border-radius:25px; font-weight:600;
+  transition:0.3s;
+}
+.download-btn:hover { box-shadow:0 6px 15px rgba(37,99,235,0.4); transform:translateY(-2px); }
+
+/* ====== FOOTER ====== */
+footer { margin-top:50px; background:#1e40af; color:#fff; text-align:center; padding:15px; font-size:14px; border-radius:12px 12px 0 0; }
+
+/* ====== RESPONSIVE ====== */
+@media(max-width:768px){
+  .nav-links { display:none; }
+  .menu-icon { display:block; }
+  .logo-text { font-size:18px; }
+  .sub-text { font-size:11px; }
+}
+@media(max-width:600px){
+  header.notes-header h1 { font-size:22px; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<header class="navbar">
+  <div class="brand">
+    <img src="logo.png" class="logo-img">
+    <div class="brand-text">
+      <div class="logo-text">APNA <span>SEM</span></div>
+      <div class="sub-text">Syllabus-based • Easy • Exam-focused PDFs</div>
+    </div>
+  </div>
+  <nav class="nav-links">
+    <a href="index.html">Home</a>
+    <a href="courses.html">Courses</a>
+    <a href="#about">About</a>
+    <a href="#contact">Contact</a>
+  </nav>
+  <div class="menu-icon" onclick="toggleMenu()">☰</div>
+</header>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <button class="close-btn" onclick="toggleMenu()">← Back</button>
+  <a href="index.html">Home</a>
+  <a href="courses.html">Courses</a>
+  <a href="#about">About</a>
+  <a href="#contact">Contact</a>
+</div>
+
+<!-- NOTES HEADER -->
+<header class="notes-header">
+  <h1>BCS FY – 1st Semester Notes</h1>
+  <p>Syllabus-based • Easy • Exam-focused PDFs</p>
+</header>
+
+<!-- CONTENT -->
+<div class="container">
+  <div class="intro">
+    <p>
+      These notes are prepared strictly according to the BCS FY Semester 1 syllabus.
+      All subjects are simplified for easy understanding and exam preparation.
+      Prepared by <strong>APNA SEM</strong> for educational use only.
+    </p>
+  </div>
+
+  <div class="subjects">
+    <div class="subject-card">
+      <h3>Logic Building with C</h3>
+      <p>Problem-solving techniques, C fundamentals, control structures, functions, arrays and logic-based programs.</p>
+      <a href="assests/logic building with c.pdf" class="download-btn">Get Notes</a>
+    </div>
+
+    <div class="subject-card">
+      <h3>Web Technology</h3>
+      <p>HTML, CSS basics, web concepts, internet fundamentals and exam-oriented theory.</p>
+      <a href="assests/HTML Handwritten Notes.pdf" class="download-btn">Get Notes</a>
+    </div>
+
+    <div class="subject-card">
+      <h3>Computer Network</h3>
+      <p>Networking basics, OSI model, network devices, protocols and important exam topics.</p>
+      <a href="assests/computer network.pdf" class="download-btn">Get Notes</a>
+    </div>
+
+    <div class="subject-card">
+      <h3>Office Automation</h3>
+      <p>MS Word, Excel, PowerPoint, internet usage and practical-oriented concepts.</p>
+      <a href="notes/bcs/sem1/office-automation.pdf" class="download-btn">Get Notes</a>
+    </div>
+
+    <div class="subject-card">
+      <h3>Compulsory English (AEC)</h3>
+      <p>Grammar, communication skills, comprehension and exam-focused English content.</p>
+      <a href="notes/bcs/sem1/compulsory-english.pdf" class="download-btn">Get Notes</a>
+    </div>
+
+    <div class="subject-card">
+      <h3>Indian Knowledge System (IKS)</h3>
+      <p>Indian culture, heritage, traditional knowledge systems and value-based education.</p>
+      <a href="notes/bcs/sem1/iks.pdf" class="download-btn">Get Notes</a>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  © 2026 APNA SEM | Educational Content Only
+</footer>
+
+<script>
+function toggleMenu(){
+  document.getElementById("mobileMenu").classList.toggle("active");
+}
+</script>
+
+</body>
+</html>

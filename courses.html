@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Courses & Semesters | APNA SEM</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Segoe UI, Arial, sans-serif;
+}
+
+body{
+  background:#f1f5f9;
+  color:#1e293b;
+}
+
+/* ========================= NAVBAR ========================= */
+.navbar{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:12px 20px;
+  background:linear-gradient(135deg,#2563eb,#1e40af);
+  color:white;
+  position:fixed;
+  width:100%;
+  top:0;
+  z-index:1000;
+}
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+
+.logo-img{
+  width:52px;
+  height:52px;
+  border-radius:50%;
+  padding:3px;
+  background:white;
+}
+
+.brand-text{
+  display:flex;
+  flex-direction:column;
+  line-height:1.2;
+}
+
+.logo-text{
+  font-size:20px;
+  font-weight:700;
+}
+
+.logo-text span{ color:#ffeb3b; }
+
+.sub-text{
+  font-size:12px;
+  opacity:0.9;
+}
+
+.nav-links{
+  display:flex;
+  gap:20px;
+}
+
+.nav-links a{
+  color:white;
+  text-decoration:none;
+  font-weight:700;
+}
+
+.menu-icon{
+  display:none;
+  font-size:30px;
+  cursor:pointer;
+}
+
+/* MOBILE MENU */
+.mobile-menu{
+  position:fixed;
+  top:0;
+  right:-100%;
+  width:75%;
+  height:100vh;
+  background:linear-gradient(180deg,#83adf7,#748499);
+  padding:25px;
+  transition:.4s;
+  z-index:2000;
+}
+
+.mobile-menu.active{ right:0; }
+
+.mobile-menu a{
+  display:block;
+  margin:15px 0;
+  font-size:18px;
+  color:black;
+  text-decoration:none;
+}
+
+.close-btn{
+  background:#465292;
+  color:white;
+  border:none;
+  padding:10px 16px;
+  border-radius:10px;
+  margin-bottom:20px;
+  cursor:pointer;
+}
+
+/* ========================= CONTENT ========================= */
+.container{
+  max-width:1100px;
+  margin:140px auto 40px;
+  padding:0 20px;
+}
+
+.courses{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:25px;
+}
+
+.course-card{
+  background:#fff;
+  padding:25px;
+  border-radius:16px;
+  box-shadow:0 10px 25px rgba(0,0,0,.1);
+  text-align:center;
+}
+
+.course-card h3{
+  color:#0e2d92;
+  font-size:22px;
+}
+
+.course-card p{
+  font-size:14px;
+  color:#475569;
+  margin-bottom:16px;
+}
+
+.semester-select{
+  width:100%;
+  padding:11px;
+  border-radius:25px;
+  border:2px solid #002d8f;
+  margin-bottom:14px;
+}
+
+.notes-btn{
+  display:block;
+  width:100%;
+  background:linear-gradient(135deg,#2563eb,#1e40af);
+  color:#fff;
+  padding:11px;
+  border-radius:25px;
+  text-decoration:none;
+  font-weight:600;
+}
+
+footer{
+  margin-top:60px;
+  background:#2f3957;
+  color:#fff;
+  text-align:center;
+  padding:14px;
+}
+
+/* ========================= RESPONSIVE ========================= */
+@media(max-width:768px){
+  .nav-links{display:none;}
+  .menu-icon{display:block;}
+  .logo-text{font-size:18px;}
+  .sub-text{font-size:11px;}
+}
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<header class="navbar">
+  <div class="brand">
+    <img src="logo.png" class="logo-img">
+    <div class="brand-text">
+      <div class="logo-text">APNA <span>SEM</span></div>
+      <div class="sub-text">Select Course & Semester • Syllabus-based notes</div>
+    </div>
+  </div>
+
+  <nav class="nav-links">
+    <a href="index.html">Home</a>
+    <a href="#courses">Courses</a>
+    <a href="#about">About</a>
+    <a href="#contact">Contact</a>
+  </nav>
+
+  <div class="menu-icon" onclick="toggleMenu()">☰</div>
+</header>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <button class="close-btn" onclick="toggleMenu()">← Back</button>
+  <a href="index.html">Home</a>
+  <a href="#courses">Courses</a>
+  <a href="#about">About</a>
+  <a href="#contact">Contact</a>
+</div>
+
+<!-- COURSES CONTENT -->
+<div class="container" id="courses">
+  <div class="courses">
+
+    <!-- BCS -->
+    <div class="course-card">
+      <h3>BCS</h3>
+      <p>Bachelor of Computer Science</p>
+      <select class="semester-select" data-course="bcs">
+        <option disabled selected>Select Semester</option>
+        <option>Semester 1</option><option>Semester 2</option>
+        <option>Semester 3</option><option>Semester 4</option>
+        <option>Semester 5</option><option>Semester 6</option>
+        <option>Semester 7</option><option>Semester 8</option>
+      </select>
+      <a href="#" class="notes-btn" onclick="openNotes(this)">Get Notes</a>
+    </div>
+
+    <!-- BCA -->
+    <div class="course-card">
+      <h3>BCA</h3>
+      <p>Bachelor of Computer Applications</p>
+      <select class="semester-select" data-course="bca">
+        <option disabled selected>Select Semester</option>
+        <option>Semester 1</option><option>Semester 2</option>
+        <option>Semester 3</option><option>Semester 4</option>
+        <option>Semester 5</option><option>Semester 6</option>
+        <option>Semester 7</option><option>Semester 8</option>
+      </select>
+      <a href="#" class="notes-btn" onclick="openNotes(this)">Get Notes</a>
+    </div>
+
+    <!-- Data Science -->
+    <div class="course-card">
+      <h3>Data Science</h3>
+      <p>Analytics & Artificial Intelligence</p>
+      <select class="semester-select" data-course="datascience">
+        <option disabled selected>Select Semester</option>
+        <option>Semester 1</option><option>Semester 2</option>
+        <option>Semester 3</option><option>Semester 4</option>
+        <option>Semester 5</option><option>Semester 6</option>
+        <option>Semester 7</option><option>Semester 8</option>
+      </select>
+      <a href="#" class="notes-btn" onclick="openNotes(this)">Get Notes</a>
+    </div>
+
+    <!-- MCS -->
+    <div class="course-card">
+      <h3>MCS</h3>
+      <p>Master of Computer Science</p>
+      <select class="semester-select" data-course="mcs">
+        <option disabled selected>Select Semester</option>
+        <option>Semester 1</option><option>Semester 2</option>
+        <option>Semester 3</option><option>Semester 4</option>
+        <option>Semester 5</option><option>Semester 6</option>
+        <option>Semester 7</option><option>Semester 8</option>
+      </select>
+      <a href="#" class="notes-btn" onclick="openNotes(this)">Get Notes</a>
+    </div>
+
+    <!-- MCA -->
+    <div class="course-card">
+      <h3>MCA</h3>
+      <p>Master of Computer Applications</p>
+      <select class="semester-select" data-course="mca">
+        <option disabled selected>Select Semester</option>
+        <option>Semester 1</option><option>Semester 2</option>
+        <option>Semester 3</option><option>Semester 4</option>
+        <option>Semester 5</option><option>Semester 6</option>
+        <option>Semester 7</option><option>Semester 8</option>
+      </select>
+      <a href="#" class="notes-btn" onclick="openNotes(this)">Get Notes</a>
+    </div>
+
+  </div>
+</div>
+
+<footer>
+© 2026 APNA SEM | Educational purpose only
+</footer>
+
+<!-- JS -->
+<script src="script.js"></script>
+
+</body>
+</html>

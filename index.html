@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>APNA SEM | Student Learning Platform</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    /* =========================
+       GLOBAL RESET
+    ========================= */
+    * { margin:0; padding:0; box-sizing:border-box; font-family:"Segoe UI", Arial, sans-serif; }
+    html { scroll-behavior: smooth; }
+    body { background: linear-gradient(180deg, #12182d, #040507); }
+
+    /* =========================
+       NAVBAR
+    ========================= */
+    .navbar {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 12px 20px; background: linear-gradient(135deg, #2563eb, #1e40af);
+      color: white; position: fixed; width: 100%; top: 0; z-index: 1000;
+      animation: slideDown 0.8s ease;
+    }
+    .brand { display:flex; align-items:center; gap:10px; }
+    .logo-img { width:55px; height:55px; border-radius:50%; padding:3px; object-fit:cover; background:white; }
+    .logo-text { font-size:22px; font-weight:700; }
+    .logo-text span { color:#ffeb3b; }
+    .nav-links { display:flex; gap:20px; }
+    .nav-links a { color:white; text-decoration:none; font-weight:700; position:relative; }
+    .nav-links a::after {
+      content:""; position:absolute; width:0; height:2px; background:white; left:0; bottom:-4px; transition:0.3s;
+    }
+    .nav-links a:hover::after { width:100%; }
+    .menu-icon { display:none; font-size:30px; cursor:pointer; color:white; }
+
+    /* =========================
+       MOBILE MENU
+    ========================= */
+    .mobile-menu {
+      position:fixed; top:0; right:-100%; width:75%; height:100vh;
+      background: linear-gradient(180deg, #83adf7, #748499); padding:25px; color: cornsilk;
+      display:flex; flex-direction:column; transition:right 0.45s ease-in-out; z-index:2000;
+    }
+    .mobile-menu.active { right:0; }
+    .mobile-header { margin-bottom:25px; }
+    .close-btn { background:rgb(70,82,146); color:#fff; border:none; padding:10px 16px; border-radius:10px; font-weight:bold; cursor:pointer; }
+    .mobile-menu a { color:black; text-decoration:none; font-size:18px; margin:14px 0; opacity:0; animation:fadeSlide 0.5s forwards; }
+    .mobile-menu.active a:nth-child(2) { animation-delay:0.1s; }
+    .mobile-menu.active a:nth-child(3) { animation-delay:0.2s; }
+    .mobile-menu.active a:nth-child(4) { animation-delay:0.3s; }
+    .mobile-menu.active a:nth-child(5) { animation-delay:0.4s; }
+    .mobile-menu.active a:nth-child(6) { animation-delay:0.5s; }
+
+    /* =========================
+       HERO SECTION
+    ========================= */
+    .hero {
+      display:flex; align-items:center; justify-content:space-between;
+      padding:120px 10% 80px; background:linear-gradient(135deg, #303672, #788cd4);
+      animation:fadeUp 1s ease;
+    }
+    .hero-text { max-width:500px; }
+    .hero-text h2 { font-size:42px; margin-bottom:15px; color:#fff; }
+    .hero-text p { font-size:18px; margin-bottom:25px; color:#fff; }
+    .cta-btn {
+      background:linear-gradient(135deg, #283754, #496fe2); color:white;
+      padding:12px 30px; border-radius:30px; text-decoration:none; font-weight:bold; transition:0.3s;
+    }
+    .cta-btn:hover { transform:translateY(-2px); box-shadow:0 10px 25px rgba(37,99,235,0.3); }
+    .hero-img img { width:280px; animation:float 3s ease-in-out infinite; }
+
+    /* =========================
+       RESOURCES SECTION
+    ========================= */
+    .resources { padding:70px 20px; text-align:center; background:white; }
+    .resources h2 { font-size:32px; margin-bottom:35px; color:#1e40af; }
+    .cards { display:flex; justify-content:center; gap:22px; flex-wrap:wrap; }
+    .card {
+      background:#fff; width:600px; padding:25px; border-radius:18px;
+      box-shadow:0 10px 25px rgba(0,0,0,0.1); transition:0.35s;
+    }
+    .card:hover { transform:translateY(-10px); }
+
+    /* Notes buttons */
+    .notes-btn-container { text-align:center; margin-top:15px; }
+    .get-notes-btn {
+      display:inline-block; background:linear-gradient(135deg,#2563eb,#1e40af);
+      color:#fff; padding:12px 28px; border-radius:30px; font-weight:600; text-decoration:none; transition:0.3s;
+    }
+
+    .get-notes-btn{
+  border:none;
+  cursor:pointer;
+}
+    .get-notes-btn:hover { transform:translateY(-3px); box-shadow:0 8px 20px rgba(37,99,235,0.4); }
+
+    /* =========================
+       INFO SECTIONS
+    ========================= */
+    #info-sections {
+      display:flex; flex-wrap:wrap; justify-content:center; gap:25px;
+      background: linear-gradient(135deg, #022c46, #396eff); padding:60px 20px;
+    }
+    .info-card {
+      background: linear-gradient(135deg,#ffffff,#f0f4ff); border-radius:20px; padding:30px;
+      max-width:400px; box-shadow:0 15px 35px rgba(255,255,255,0.1); opacity:0;
+      transform:translateY(30px); transition:all 0.8s ease; text-align:center;
+    }
+    .info-card h2 { color:#2f4ba6; font-size:26px; margin-bottom:15px; }
+    .info-card p { color:#333; font-size:16px; line-height:1.6; }
+    .info-card:hover { transform:translateY(-10px) scale(1.03); box-shadow:0 20px 40px rgba(249,0,0,0.15); }
+    .show-card { opacity:1; transform:translateY(0); }
+
+    /* =========================
+       FOOTER
+    ========================= */
+    footer { background:#1e40af; color:white; text-align:center; padding:15px; }
+
+    /* =========================
+       ANIMATIONS
+    ========================= */
+    @keyframes slideDown { from{transform:translateY(-100%);} to{transform:translateY(0);} }
+    @keyframes fadeUp { from{opacity:0; transform:translateY(25px);} to{opacity:1; transform:translateY(0);} }
+    @keyframes fadeSlide { from{opacity:0; transform:translateX(20px);} to{opacity:1; transform:translateX(0);} }
+    @keyframes float { 0%{transform:translateY(0);} 50%{transform:translateY(-12px);} 100%{transform:translateY(0);} }
+
+    /* =========================
+       RESPONSIVE
+    ========================= */
+    @media (max-width:768px){
+      .nav-links{display:none;}
+      .menu-icon{display:block;}
+      .hero{flex-direction:column;text-align:center;}
+      .hero-img img{width:220px;margin-top:30px;}
+      #info-sections{flex-direction:column;align-items:center;}
+      .info-card{max-width:90%;}
+      .get-notes-btn{width:80%; padding:12px 0; font-size:16px;}
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <header class="navbar">
+    <div class="brand">
+      <img src="logo.png" alt="APNA SEM Logo" class="logo-img">
+      <h1 class="logo-text">APNA <span>SEM</span></h1>
+    </div>
+    <nav class="nav-links">
+      <a href="#home">Home</a>
+      <a href="#resources">Resources</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+      <a href="#privacy">Privacy Policy</a>
+      <a href="#terms">Terms & Conditions</a>
+    </nav>
+    <div class="menu-icon" onclick="toggleMenu()">☰</div>
+  </header>
+
+  <!-- MOBILE MENU -->
+  <div class="mobile-menu" id="mobileMenu">
+    <div class="mobile-header">
+      <button class="close-btn" onclick="toggleMenu()">← Back</button>
+    </div>
+    <a href="#home" onclick="toggleMenu()">Home</a>
+    <a href="#resources" onclick="toggleMenu()">Resources</a>
+    <a href="#about" onclick="toggleMenu()">About</a>
+    <a href="#contact" onclick="toggleMenu()">Contact</a>
+    <a href="#privacy" onclick="toggleMenu()">Privacy Policy</a>
+    <a href="#terms" onclick="toggleMenu()">Terms & Conditions</a>
+  </div>
+
+  <!-- HERO SECTION -->
+  <section class="hero" id="home">
+    <div class="hero-text">
+      <h2>Study Smart, Not Hard 🚀</h2>
+      <p>Notes • Question Papers • Semester-wise Study Material</p>
+      <a href="#resources" class="cta-btn">Explore Resources</a>
+    </div>
+    <div class="hero-img">
+      <img src="logo.png" alt="APNA SEM Logo">
+    </div>
+  </section>
+
+  <!-- RESOURCES SECTION -->
+  <section class="resources" id="resources">
+    <h2>What You Get</h2>
+    <div class="cards">
+
+      <!-- Notes PDF -->
+      <div class="card">
+        <h3>📘 Notes PDF</h3>
+        <p>Well-organized and syllabus-based notes for BA, BSc, and BCS students. These notes are carefully prepared to cover all important topics and chapters required for exams,
+           making learning easier and more effective. Each subject is structured semester-wise, allowing students to quickly find and study relevant material. 
+           Perfect for smart learning!.</p>
+        <div class="notes-btn-container">
+          <a href="courses.html" target="_blank" class="get-notes-btn">Get a Notes</a>
+        </div>
+      </div>
+
+      <!-- Question Papers -->
+      <div class="card">
+           <h3>📝 Question Papers</h3>
+        <p>Access university previous year question papers for BA, BSc, BCS, BCA, and other courses. Practicing past papers improves time management, boosts confidence, and supports smart study strategies. Perfect for exam preparation and achieving better results with less stress.</p>
+        <div class="notes-btn-container">
+          <a href="notes/question-papers.pdf" target="_blank" class="get-notes-btn">Get Papers</a>
+        </div>
+      </div>
+
+      <!-- Important Topics -->
+      <div class="card">
+        <h3>⭐ Important Topics</h3>
+        <p>Prepare smarter with exam-focused important topics for BA, BSc, BCS, BCA, and other courses. These topics highlight the most relevant chapters and concepts that frequently appear in university exams. Ideal for strategic learning, quick revision, and scoring better marks.</p>
+        <div class="notes-btn-container">
+          <a href="notes/important-topics.pdf" target="_blank" class="get-notes-btn">Get Topics</a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- INFO SECTIONS -->
+  <section id="info-sections">
+    <div class="info-card" id="about">
+      <h2>About APNA SEM</h2>
+      <p>APNA SEM is a student-focused platform providing notes, question papers, and study materials to improve academic performance and CGPA. Learn smart, collaborate with peers!</p>
+    </div>
+    <div class="info-card" id="contact">
+      <h2>Contact Us</h2>
+      <p>📞 <strong>Mobile:</strong> 8788866569</p>
+      <p>📧 <strong>Email:</strong> maulichakor007@gmail.com</p>
+    </div>
+    <div class="info-card" id="privacy">
+      <h2>Privacy Policy</h2>
+      <p>We respect your privacy. APNA SEM does not sell, trade, or rent users' personal information. Data is solely used to improve services.</p>
+    </div>
+    <div class="info-card" id="terms">
+      <h2>Terms & Conditions</h2>
+      <p>By using APNA SEM, you agree to our terms: no pirated content, respect copyright, and use resources for educational purposes only.</p>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>© 2026 APNA SEM | All Rights Reserved ❤️</p>
+  </footer>
+
+  <!-- JS -->
+  <script>
+    function toggleMenu() { document.getElementById("mobileMenu").classList.toggle("active"); }
+
+    // Scroll animations
+    const cards = document.querySelectorAll('.info-card');
+    window.addEventListener('scroll', () => {
+      cards.forEach(card => {
+        const rect = card.getBoundingClientRect();
+        if(rect.top < window.innerHeight - 100){ card.classList.add('show-card'); }
+
+
+        function goToNotes(){
+    window.location.href = "courses.html"; }
+      });
+    });
+  </script>
+</body>
+</html>
