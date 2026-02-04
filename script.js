@@ -18,14 +18,14 @@ function openNotes(btn){
   // Mapping for all courses and semesters
   const pageMap = {
     "bcs": {
-      "Semester 1": "BCS_department/1sembcs.html",
-      "Semester 2": "BCS_department/2sembcs.html",
-      "Semester 3": "BCS_department/3sembcs.html",
-      "Semester 4": "BCS_department/4sembcs.html",
-      "Semester 5": "BCS_department/5sembcs.html",
-      "Semester 6": "BCS_department/6thsem.html",
-      "Semester 7": "bcs-semester-7.html",
-      "Semester 8": "bcs-semester-8.html"
+      "Semester 1": "1sembcs.html",
+      "Semester 2": "2sembcs.html",
+      "Semester 3": "3sembcs.html",
+      "Semester 4": "4sembcs.html",
+      "Semester 5": "5sembcs.html",
+      "Semester 6": "6thsem.html",
+      "Semester 7": "7sembcs.html",
+      "Semester 8": "8sembcs.html"
     },
     "bca": {
       "Semester 1": "bca-semester-1.html",
