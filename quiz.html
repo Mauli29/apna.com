@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Department Quiz App</title>
+
+<style>
+body{
+    font-family: Arial, sans-serif;
+    background:#f4f6f8;
+    text-align:center;
+}
+.container{
+    margin-top:40px;
+}
+select,button{
+    padding:10px;
+    margin:10px;
+    width:250px;
+}
+button{
+    cursor:pointer;
+    background:#007bff;
+    color:white;
+    border:none;
+}
+button:hover{
+    background:#0056b3;
+}
+.quiz-box{
+    display:none;
+    margin-top:30px;
+}
+.option-btn{
+    display:block;
+    margin:8px auto;
+    width:300px;
+}
+</style>
+
+</head>
+<body>
+
+<div class="container">
+
+<h2>🎓 Online Quiz System</h2>
+
+<div id="selectionBox">
+<select id="department">
+    <option value="">Select Department</option>
+    <option value="cs">Computer Science</option>
+</select>
+
+<select id="course">
+    <option value="">Select Course</option>
+    <option value="bcs">BCS</option>
+</select>
+
+<select id="subject">
+    <option value="">Select Subject</option>
+    <option value="html">HTML</option>
+    <option value="network">Computer Network</option>
+</select>
+
+<br>
+<button onclick="startQuiz()">Start Quiz</button>
+</div>
+
+<div class="quiz-box" id="quizBox">
+    <h3 id="question"></h3>
+    <button class="option-btn" onclick="checkAnswer('c.html')" id="A"></button>
+    <button class="option-btn" onclick="checkAnswer('B')" id="B"></button>
+    <button class="option-btn" onclick="checkAnswer('C')" id="C"></button>
+    <button class="option-btn" onclick="checkAnswer('D')" id="D"></button>
+</div>
+
+</div>
+
+<script>
+const quizData = {
+html:[
+ {q:"HTML stands for?",A:"Hyper Text Markup Language",B:"High Text Language",C:"Hyper Tool Language",D:"None",ans:"A"},
+ {q:"Root tag of HTML?",A:"<html>",B:"<body>",C:"<head>",D:"<title>",ans:"A"}
+],
+network:[
+ {q:"LAN stands for?",A:"Local Area Network",B:"Large Area Network",C:"Long Area Network",D:"None",ans:"A"},
+ {q:"Which device connects networks?",A:"Hub",B:"Switch",C:"Router",D:"Repeater",ans:"C"}
+]
+};
+
+let currentQuiz=[];
+let index=0;
+let score=0;
+
+function startQuiz(){
+    let dept=document.getElementById("department").value;
+    let course=document.getElementById("course").value;
+    let subject=document.getElementById("subject").value;
+
+    if(dept=="" || course=="" || subject==""){
+        alert("Please select Department, Course and Subject");
+        return;
+    }
+
+    currentQuiz=quizData[subject];
+    document.getElementById("selectionBox").style.display="none";
+    document.getElementById("quizBox").style.display="block";
+    showQuestion();
+}
+
+function showQuestion(){
+    let q=currentQuiz[index];
+    document.getElementById("question").innerHTML=q.q;
+    document.getElementById("c.html").innerHTML=q.A;
+    document.getElementById("B").innerHTML=q.B;
+    document.getElementById("C").innerHTML=q.C;
+    document.getElementById("D").innerHTML=q.D;
+}
+
+function checkAnswer(opt){
+    if(opt===currentQuiz[index].ans){
+        score++;
+    }
+    index++;
+    if(index<currentQuiz.length){
+        showQuestion();
+    }else{
+        alert("Quiz Finished!\nScore: "+score+"/"+currentQuiz.length);
+        location.reload();
+    }
+}
+</script>
+
+</body>
+</html>
