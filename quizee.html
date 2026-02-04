@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>APNA SEM</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+/* ====== GLOBAL ====== */
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:"Segoe UI", Arial, sans-serif;
+}
+body{
+  background:#f1f5f9;
+  color:#1e293b;
+}
+
+/* ====== NAVBAR ====== */
+.navbar{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:12px 20px;
+  background:#2563eb;
+  color:#fff;
+  position:fixed;
+  top:0;
+  width:100%;
+  z-index:1000;
+}
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+.logo-img{
+  width:45px;
+  height:45px;
+  border-radius:50%;
+  background:#fff;
+  padding:3px;
+}
+.brand-text{
+  display:flex;
+  flex-direction:column;
+}
+.logo-text{
+  font-size:20px;
+  font-weight:700;
+}
+.logo-text span{
+  color:#ffeb3b;
+}
+.sub-text{
+  font-size:12px;
+  opacity:0.9;
+}
+
+.nav-links{
+  display:flex;
+  gap:18px;
+}
+.nav-links a{
+  color:#fff;
+  text-decoration:none;
+  font-weight:600;
+}
+
+.menu-icon{
+  display:none;
+  font-size:28px;
+  cursor:pointer;
+}
+
+/* ====== MOBILE MENU ====== */
+.mobile-menu{
+  position:fixed;
+  top:0;
+  right:-100%;
+  width:70%;
+  height:100vh;
+  background:#83adf7;
+  padding:25px;
+  transition:0.3s;
+  z-index:2000;
+}
+.mobile-menu.active{
+  right:0;
+}
+.mobile-menu a{
+  display:block;
+  margin:18px 0;
+  font-size:18px;
+  color:#1e293b;
+  text-decoration:none;
+}
+.close-btn{
+  background:#1e40af;
+  color:#fff;
+  border:none;
+  padding:10px 16px;
+  border-radius:8px;
+  margin-bottom:20px;
+  cursor:pointer;
+}
+
+/* ====== FOOTER ====== */
+footer{
+  position:fixed;
+  bottom:0;
+  width:100%;
+  background:#1e40af;
+  color:#fff;
+  text-align:center;
+  padding:14px;
+  font-size:14px;
+}
+
+/* ====== RESPONSIVE ====== */
+@media(max-width:768px){
+  .nav-links{ display:none; }
+  .menu-icon{ display:block; }
+}
+</style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<header class="navbar">
+  <div class="brand">
+    <img src="logo.png" class="logo-img" alt="APNA SEM Logo">
+    <div class="brand-text">
+      <div class="logo-text">APNA <span>SEM</span></div>
+      <div class="sub-text">Syllabus-based • Exam-focused</div>
+    </div>
+  </div>
+
+  <nav class="nav-links">
+    <a href="index.html">Home</a>
+    <a href="courses.html">Courses</a>
+    <a href="#about">About</a>
+    <a href="#contact">Contact</a>
+  </nav>
+
+  <div class="menu-icon" onclick="toggleMenu()">☰</div>
+</header>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <button class="close-btn" onclick="toggleMenu()">← Back</button>
+  <a href="index.html">Home</a>
+  <a href="courses.html">Courses</a>
+  <a href="#about">About</a>
+  <a href="#contact">Contact</a>
+</div>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family: "Segoe UI", Arial, sans-serif;
+}
+
+
+
+
+.nav-links a{
+    color:#fff;
+    margin-left:18px;
+    text-decoration:none;
+    font-weight:600;
+}
+
+/* ===== MAIN CONTENT ===== */
+.container{
+    max-width:500px;
+    margin:120px auto 60px;
+    background:#fff;
+    padding:30px;
+    border-radius:14px;
+    box-shadow:0 10px 25px rgba(85, 78, 185, 0.08);
+    text-align:center;
+}
+
+.container h2{
+    margin-bottom:20px;
+}
+
+select,button{
+    width:100%;
+    padding:12px;
+    margin:10px 0;
+    font-size:16px;
+    border-radius:8px;
+}
+
+select{
+    border:1px solid #cbd5e1;
+}
+
+button{
+    background:#2563eb;
+    color:#fff;
+    border:none;
+    cursor:pointer;
+    font-weight:600;
+}
+button:hover{
+    background:#1e40af;
+}
+
+/* ===== FOOTER ===== */
+footer{
+    background:#1e40af;
+    color:#fff;
+    text-align:center;
+    padding:14px;
+    font-size:14px;
+}
+</style>
+</head>
+
+<body>
+
+
+<!-- ===== QUIZ SELECTION ===== -->
+<div class="container">
+    <h2>🎓 Quiz Selection</h2>
+
+    <select id="department" onchange="loadCourses()">
+        <option value="">Select Department</option>
+        <option value="cs">Computer Science</option>
+    </select>
+
+    <select id="course" onchange="loadSubjects()" disabled>
+        <option value="">Select Course</option>
+    </select>
+
+    <select id="subject" disabled>
+        <option value="">Select Subject</option>
+    </select>
+
+    <button onclick="getQuiz()">Get Quiz</button>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  © 2026 APNA SEM | Educational Content Only
+</footer>
+
+<script>
+function toggleMenu(){
+  document.getElementById("mobileMenu").classList.toggle("active");
+}
+
+function loadCourses(){
+    const dept = document.getElementById("department").value;
+    const course = document.getElementById("course");
+    const subject = document.getElementById("subject");
+
+    course.innerHTML = '<option value="">Select Course</option>';
+    subject.innerHTML = '<option value="">Select Subject</option>';
+    subject.disabled = true;
+
+    if(dept === "cs"){
+        course.disabled = false;
+        course.innerHTML += '<option value="bcs">BCS</option>';
+        course.innerHTML += '<option value="bca">BCA</option>';
+        course.innerHTML += '<option value="bsc">BSc Computer Science</option>';
+    }else{
+        course.disabled = true;
+    }
+}
+
+function loadSubjects(){
+    const course = document.getElementById("course").value;
+    const subject = document.getElementById("subject");
+
+    subject.innerHTML = '<option value="">Select Subject</option>';
+
+    if(course === "bcs"){
+        subject.disabled = false;
+        subject.innerHTML += '<option value="web">Web Technology</option>';
+        subject.innerHTML += '<option value="network">Computer Network</option>';
+        subject.innerHTML += '<option value="c">Logic Building with C</option>';
+    }else{
+        subject.disabled = true;
+    }
+}
+
+function getQuiz(){
+    const dept = document.getElementById("department").value;
+    const course = document.getElementById("course").value;
+    const subject = document.getElementById("subject").value;
+
+    if(dept==="" || course==="" || subject===""){
+        alert("Please select Department, Course and Subject");
+        return;
+    }
+
+    if(subject === "web"){
+        location.href = "web.html";
+    }
+    else if(subject === "network"){
+        location.href = "cn.html";
+    }
+     
+    else if(subject === "c"){
+        location.href = "c.html";
+    }
+}
+</script>
+
+</body>
+</html>

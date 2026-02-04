@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Logic Building with C Quiz | APNA SEM</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:"Segoe UI", Arial, sans-serif;
+}
+body{
+  background: linear-gradient(135deg,#667eea,#764ba2);
+  min-height:100vh;
+  color:#fff;
+  display:flex;
+  flex-direction:column;
+}
+
+/* ===== HEADER ===== */
+.navbar{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:12px 20px;
+  background:#2563eb;
+  position:fixed;
+  top:0;
+  width:100%;
+  z-index:1000;
+}
+.brand{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+.logo-img{
+  width:45px;
+  height:45px;
+  border-radius:50%;
+  background:#fff;
+}
+.logo-text{
+  font-size:20px;
+  font-weight:700;
+}
+.logo-text span{color:#ffeb3b;}
+.sub-text{font-size:12px;}
+
+.nav-links{display:flex;gap:18px;}
+.nav-links a{
+  color:#fff;
+  text-decoration:none;
+  font-weight:600;
+}
+.menu-icon{display:none;font-size:26px;cursor:pointer;}
+
+/* ===== MOBILE MENU ===== */
+.mobile-menu{
+  position:fixed;
+  top:0;
+  right:-100%;
+  width:70%;
+  height:100vh;
+  background:#93b4ff;
+  padding:25px;
+  transition:.3s;
+  z-index:2000;
+}
+.mobile-menu.active{right:0;}
+.mobile-menu a{
+  display:block;
+  margin:15px 0;
+  color:#1e293b;
+  text-decoration:none;
+  font-size:18px;
+}
+.close-btn{
+  background:#1e40af;
+  color:#fff;
+  border:none;
+  padding:10px 15px;
+  border-radius:8px;
+  margin-bottom:20px;
+  cursor:pointer;
+}
+
+/* ===== QUIZ ===== */
+.main{
+  flex:1;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  padding:90px 0 80px;
+}
+.quiz-box{
+  background:#2c2c2c;
+  width:500px;
+  padding:25px;
+  border-radius:10px;
+  box-shadow:0 10px 25px rgba(222, 176, 176, 0.4);
+}
+h1,h2{text-align:center;
+margin: 20px;}
+.options label{
+  display:block;
+  background:#444;
+  margin:8px 0;
+  padding:10px;
+  border-radius:5px;
+  cursor:pointer;
+}
+.options input{margin-right:10px;}
+.buttons{
+  display:flex;
+  gap:10px;
+  margin-top:15px;
+}
+button{
+  flex:1;
+  padding:10px;
+  font-size:16px;
+  background:#4caf50;
+  border:none;
+  color:#fff;
+  border-radius:5px;
+  cursor:pointer;
+}
+button:hover{background:#43a047;}
+.hide{display:none;}
+
+/* ===== FOOTER ===== */
+footer{
+  position:fixed;
+  bottom:0;
+  width:100%;
+  background:#1e40af;
+  text-align:center;
+  padding:14px;
+  font-size:14px;
+}
+
+/* ===== RESPONSIVE ===== */
+@media(max-width:768px){
+  .nav-links{display:none;}
+  .menu-icon{display:block;}
+  .quiz-box{width:90%;}
+}
+</style>
+</head>
+
+<body>
+
+<header class="navbar">
+  <div class="brand">
+    <img src="logo.png" class="logo-img">
+    <div>
+      <div class="logo-text">APNA <span>SEM</span></div>
+      <div class="sub-text">Syllabus-based • Exam-focused</div>
+    </div>
+  </div>
+  <nav class="nav-links">
+    <a href="#Home">Home</a>
+    <a href="#courses.html">Courses</a>
+    <a href="#about">About</a>
+    <a href="#contact">Contact</a>
+  </nav>
+  <div class="menu-icon" onclick="toggleMenu()">☰</div>
+</header>
+
+<div class="mobile-menu" id="mobileMenu">
+  <button class="close-btn" onclick="toggleMenu()">← Back</button>
+  <a href="index.html">Home</a>
+  <a href="courses.html">Courses</a>
+  <a href="#about">About</a>
+  <a href="#contact">Contact</a>
+</div>
+
+<div class="main">
+<div class="quiz-box">
+<h1>Computer Networks Quiz</h1>
+
+<div id="quiz">
+  <h2 id="question"></h2>
+  <div class="options">
+    <label><input type="radio" name="opt" value="A"> <span id="a"></span></label>
+    <label><input type="radio" name="opt" value="B"> <span id="b"></span></label>
+    <label><input type="radio" name="opt" value="C"> <span id="c"></span></label>
+    <label><input type="radio" name="opt" value="D"> <span id="d"></span></label>
+  </div>
+  <div class="buttons">
+    <button onclick="prevQuestion()">Previous</button>
+    <button onclick="location.reload()">Restart</button>
+    <button onclick="nextQuestion()">Next</button>
+  </div>
+</div>
+
+<div id="result" class="hide">
+  <h2>Result Dashboard</h2>
+  <p>Total Questions: <span id="total"></span></p>
+  <p>Correct Answers: <span id="correct"></span></p>
+  <p>Wrong Answers: <span id="wrong"></span></p>
+  <button onclick="location.reload()">Restart Quiz</button>
+</div>
+
+</div>
+</div>
+
+<footer>
+© 2026 APNA SEM | Educational Content Only
+</footer>
+
+<script>
+function toggleMenu(){
+  document.getElementById("mobileMenu").classList.toggle("active");
+}
+
+/* ===== QUESTION BANK ===== */
+const questionBank = [
+{q:"What is a computer network?",a:"A single computer",b:"Collection of connected computers",c:"Computer software",d:"Operating system",ans:"B"},
+{q:"Which device connects two networks?",a:"Hub",b:"Switch",c:"Router",d:"Repeater",ans:"C"},
+{q:"Which topology uses central device?",a:"Bus",b:"Ring",c:"Star",d:"Mesh",ans:"C"},
+{q:"LAN stands for?",a:"Large Area Network",b:"Local Area Network",c:"Long Area Network",d:"Logical Area Network",ans:"B"},
+{q:"Email sending protocol?",a:"FTP",b:"HTTP",c:"SMTP",d:"TCP",ans:"C"},
+{q:"Routing is done at which OSI layer?",a:"Transport",b:"Network",c:"Data Link",d:"Physical",ans:"B"},
+{q:"OSI model layers?",a:"5",b:"6",c:"7",d:"8",ans:"C"},
+{q:"Small area network?",a:"WAN",b:"MAN",c:"LAN",d:"PAN",ans:"C"},
+{q:"Switch works at which layer?",a:"Physical",b:"Data Link",c:"Network",d:"Transport",ans:"B"},
+{q:"IP full form?",a:"Internet Process",b:"Internet Protocol",c:"Internal Program",d:"Info Protocol",ans:"B"},
+
+
+{q:"Which topology connects devices in circular form?",a:"Bus",b:"Star",c:"Ring",d:"Mesh",ans:"C"},
+{q:"Which topology uses backbone cable?",a:"Bus",b:"Ring",c:"Star",d:"Mesh",ans:"A"},
+{q:"Which network covers a city?",a:"LAN",b:"PAN",c:"MAN",d:"WAN",ans:"C"},
+{q:"Which cable has highest bandwidth?",a:"Twisted pair",b:"Coaxial",c:"Fiber optic",d:"UTP",ans:"C"},
+{q:"Which is guided media?",a:"Radio waves",b:"Microwaves",c:"Fiber optic",d:"Infrared",ans:"C"},
+
+{q:"Which architecture has no dedicated server?",a:"Client-server",b:"Peer to peer",c:"Centralized",d:"Hybrid",ans:"B"},
+{q:"Internet vs Intranet – Intranet is",a:"Public",b:"Private",c:"Global",d:"Wireless",ans:"B"},
+{q:"Which service is connection-oriented?",a:"UDP",b:"IP",c:"TCP",d:"ICMP",ans:"C"},
+{q:"Which service is connectionless?",a:"TCP",b:"FTP",c:"UDP",d:"SMTP",ans:"C"},
+{q:"Which IP class supports multicast?",a:"Class A",b:"Class B",c:"Class C",d:"Class D",ans:"D"},
+
+{q:"Default subnet mask of Class C?",a:"255.0.0.0",b:"255.255.0.0",c:"255.255.255.0",d:"255.255.255.255",ans:"C"},
+{q:"Which address identifies hardware?",a:"IP",b:"MAC",c:"Port",d:"Protocol",ans:"B"},
+{q:"Which protocol resolves IP to MAC?",a:"DNS",b:"RARP",c:"ARP",d:"ICMP",ans:"C"},
+{q:"IPv6 is introduced mainly to solve",a:"Speed issue",b:"Security",c:"Address exhaustion",d:"Routing",ans:"C"},
+{q:"Which IP is used for testing local machine?",a:"0.0.0.0",b:"127.0.0.1",c:"255.255.255.0",d:"192.168.1.1",ans:"B"},
+
+{q:"Which OSI layer handles encryption?",a:"Physical",b:"Presentation",c:"Session",d:"Network",ans:"B"},
+{q:"Which layer establishes session?",a:"Transport",b:"Network",c:"Session",d:"Application",ans:"C"},
+{q:"Which OSI layer is closest to user?",a:"Physical",b:"Application",c:"Session",d:"Transport",ans:"B"},
+{q:"TCP/IP model is developed by",a:"ISO",b:"IEEE",c:"DARPA",d:"ANSI",ans:"C"},
+{q:"Which protocol is used for web?",a:"FTP",b:"SMTP",c:"HTTP",d:"SNMP",ans:"C"},
+
+{q:"Packet switching is best suited for",a:"Voice calls",b:"Internet",c:"Radio",d:"TV",ans:"B"},
+{q:"Circuit switching provides",a:"Shared path",b:"Dedicated path",c:"No path",d:"Random path",ans:"B"},
+{q:"Message switching stores message",a:"At receiver",b:"At sender",c:"At intermediate node",d:"Nowhere",ans:"C"},
+{q:"Which protocol checks errors?",a:"TCP",b:"UDP",c:"IP",d:"ARP",ans:"A"},
+{q:"Which protocol is faster?",a:"TCP",b:"UDP",c:"FTP",d:"SMTP",ans:"B"},
+
+{q:"Hub broadcasts data to",a:"Selected device",b:"All devices",c:"Router only",d:"Switch only",ans:"B"},
+{q:"Switch sends data to",a:"All devices",b:"Broadcast",c:"Specific device",d:"Router",ans:"C"},
+{q:"Router connects",a:"Same network",b:"Different networks",c:"Same devices",d:"Same cables",ans:"B"},
+{q:"Which device reduces collision?",a:"Hub",b:"Repeater",c:"Switch",d:"Gateway",ans:"C"},
+{q:"Which device works as protocol converter?",a:"Bridge",b:"Switch",c:"Gateway",d:"Router",ans:"C"},
+
+{q:"Cloud model accessible via internet is",a:"Private",b:"Public",c:"Hybrid",d:"Community",ans:"B"},
+{q:"Which cloud is combination of two?",a:"Public",b:"Private",c:"Hybrid",d:"Personal",ans:"C"},
+{q:"Which cloud service provides OS & runtime?",a:"IaaS",b:"PaaS",c:"SaaS",d:"FaaS",ans:"B"},
+{q:"Example of IaaS?",a:"Google Docs",b:"AWS EC2",c:"Gmail",d:"YouTube",ans:"B"},
+{q:"Example of SaaS?",a:"AWS",b:"Azure VM",c:"Gmail",d:"Docker",ans:"C"},
+
+{q:"IoT devices communicate using",a:"Sensors",b:"Internet",c:"Cloud",d:"All of these",ans:"D"},
+{q:"Smart farming uses",a:"LAN",b:"WAN",c:"IoT",d:"MAN",ans:"C"},
+{q:"Main component of IoT?",a:"Compiler",b:"Sensor",c:"Router",d:"Switch",ans:"B"},
+{q:"Which technology enables smart home?",a:"Cloud",b:"IoT",c:"LAN",d:"MAN",ans:"B"},
+{q:"Advanced networking focuses on",a:"Cables only",b:"Security & cloud",c:"Typing",d:"Hardware only",ans:"B"}
+
+];
+
+/* ===== QUIZ LOGIC ===== */
+const TOTAL_QUESTIONS = 10;
+const quizData = questionBank.sort(()=>Math.random()-0.5).slice(0,TOTAL_QUESTIONS);
+
+let index = 0;
+let userAns = [];
+
+function loadQuestion(){
+  const q = quizData[index];
+  document.getElementById("question").innerText = (index+1)+". "+q.q;
+  document.getElementById("a").innerText = q.a;
+  document.getElementById("b").innerText = q.b;
+  document.getElementById("c").innerText = q.c;
+  document.getElementById("d").innerText = q.d;
+
+  document.querySelectorAll("input[name='opt']").forEach(r=>{
+    r.checked = userAns[index] === r.value;
+  });
+}
+
+function saveAnswer(){
+  const sel = document.querySelector("input[name='opt']:checked");
+  if(sel) userAns[index] = sel.value;
+}
+
+function nextQuestion(){
+  saveAnswer();
+  if(index < quizData.length-1){
+    index++;
+    loadQuestion();
+  }else{
+    showResult();
+  }
+}
+
+function prevQuestion(){
+  saveAnswer();
+  if(index>0){
+    index--;
+    loadQuestion();
+  }
+}
+
+function showResult(){
+  document.getElementById("quiz").classList.add("hide");
+  document.getElementById("result").classList.remove("hide");
+
+  let correct=0;
+  quizData.forEach((q,i)=>{
+    if(userAns[i]===q.ans) correct++;
+  });
+
+  document.getElementById("total").innerText = quizData.length;
+  document.getElementById("correct").innerText = correct;
+  document.getElementById("wrong").innerText = quizData.length - correct;
+}
+
+loadQuestion();
+</script>
+
+</body>
+</html>

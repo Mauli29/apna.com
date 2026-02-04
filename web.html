@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Logic Building with C Quiz | APNA SEM</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:"Segoe UI", Arial, sans-serif;
+}
+body{
+  background: linear-gradient(135deg,#667eea,#764ba2);
+  min-height:100vh;
+  color:#fff;
+  display:flex;
+  flex-direction:column;
+}
+
+/* ===== HEADER ===== */
+.navbar{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:12px 20px;
+  background:#2563eb;
+  position:fixed;
+  top:0;
+  width:100%;
+  z-index:1000;
+}
+.brand{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+.logo-img{
+  width:45px;
+  height:45px;
+  border-radius:50%;
+  background:#fff;
+}
+.logo-text{
+  font-size:20px;
+  font-weight:700;
+}
+.logo-text span{color:#ffeb3b;}
+.sub-text{font-size:12px;}
+
+.nav-links{display:flex;gap:18px;}
+.nav-links a{
+  color:#fff;
+  text-decoration:none;
+  font-weight:600;
+}
+.menu-icon{display:none;font-size:26px;cursor:pointer;}
+
+/* ===== MOBILE MENU ===== */
+.mobile-menu{
+  position:fixed;
+  top:0;
+  right:-100%;
+  width:70%;
+  height:100vh;
+  background:#93b4ff;
+  padding:25px;
+  transition:.3s;
+  z-index:2000;
+}
+.mobile-menu.active{right:0;}
+.mobile-menu a{
+  display:block;
+  margin:15px 0;
+  color:#1e293b;
+  text-decoration:none;
+  font-size:18px;
+}
+.close-btn{
+  background:#1e40af;
+  color:#fff;
+  border:none;
+  padding:10px 15px;
+  border-radius:8px;
+  margin-bottom:20px;
+  cursor:pointer;
+}
+
+/* ===== QUIZ ===== */
+.main{
+  flex:1;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  padding:90px 0 80px;
+}
+.quiz-box{
+  background:#2c2c2c;
+  width:500px;
+  padding:25px;
+  border-radius:10px;
+  box-shadow:0 10px 25px rgba(14, 0, 0, 0.4);
+}
+h1,h2{text-align:center;
+margin: 20px auto;}
+.options label{
+  display:block;
+  background:#444;
+  margin:8px 0;
+  padding:10px;
+  border-radius:5px;
+  cursor:pointer;
+}
+.options input{margin-right:10px;}
+.buttons{
+  display:flex;
+  gap:10px;
+  margin-top:15px;
+}
+button{
+  flex:1;
+  padding:10px;
+  font-size:16px;
+  background:#4caf50;
+  border:none;
+  color:#fff;
+  border-radius:5px;
+  cursor:pointer;
+}
+button:hover{background:#43a047;}
+.hide{display:none;}
+
+/* ===== FOOTER ===== */
+footer{
+  position:fixed;
+  bottom:0;
+  width:100%;
+  background:#1e40af;
+  text-align:center;
+  padding:14px;
+  font-size:14px;
+}
+
+/* ===== RESPONSIVE ===== */
+@media(max-width:768px){
+  .nav-links{display:none;}
+  .menu-icon{display:block;}
+  .quiz-box{width:90%;}
+}
+</style>
+</head>
+
+<body>
+
+<header class="navbar">
+  <div class="brand">
+    <img src="logo.png" class="logo-img">
+    <div>
+      <div class="logo-text">APNA <span>SEM</span></div>
+      <div class="sub-text">Syllabus-based • Exam-focused</div>
+    </div>
+  </div>
+  <nav class="nav-links">
+    <a href="#home">Home</a>
+    <a href="#courses.html">Courses</a>
+    <a href="#about">About</a>
+    <a href="#contact">Contact</a>
+  </nav>
+  <div class="menu-icon" onclick="toggleMenu()">☰</div>
+</header>
+
+<div class="mobile-menu" id="mobileMenu">
+  <button class="close-btn" onclick="toggleMenu()">← Back</button>
+  <a href="index.html">Home</a>
+  <a href="courses.html">Courses</a>
+  <a href="#about">About</a>
+  <a href="#contact">Contact</a>
+</div>
+
+<div class="main">
+<div class="quiz-box">
+<h1>Web Technology Quiz</h1>
+
+<div id="quiz">
+  <h2 id="question"></h2>
+  <div class="options">
+    <label><input type="radio" name="opt" value="A"> <span id="a"></span></label>
+    <label><input type="radio" name="opt" value="B"> <span id="b"></span></label>
+    <label><input type="radio" name="opt" value="C"> <span id="c"></span></label>
+    <label><input type="radio" name="opt" value="D"> <span id="d"></span></label>
+  </div>
+  <div class="buttons">
+    <button onclick="prevQuestion()">Previous</button>
+    <button onclick="location.reload()">Restart</button>
+    <button onclick="nextQuestion()">Next</button>
+  </div>
+</div>
+
+<div id="result" class="hide">
+  <h2>Result Dashboard</h2>
+  <p>Total Questions: <span id="total"></span></p>
+  <p>Correct Answers: <span id="correct"></span></p>
+  <p>Wrong Answers: <span id="wrong"></span></p>
+  <button onclick="location.reload()">Restart Quiz</button>
+</div>
+
+</div>
+</div>
+
+<footer>
+© 2026 APNA SEM | Educational Content Only
+</footer>
+
+<script>
+function toggleMenu(){
+  document.getElementById("mobileMenu").classList.toggle("active");
+}
+
+/* ===== QUESTION BANK ===== */
+const questionBank = [
+
+/* ================= UNIT 1: Introduction of Web ================= */
+
+{q:"WWW stands for?",a:"World Wide Web",b:"World Web Wide",c:"Web World Wide",d:"Wide World Web",ans:"A"},
+{q:"WWW was invented by?",a:"Bill Gates",b:"Steve Jobs",c:"Tim Berners-Lee",d:"Mark Zuckerberg",ans:"C"},
+{q:"WWW was invented in which year?",a:"1980",b:"1989",c:"1995",d:"2000",ans:"B"},
+{q:"Web browser is used to?",a:"Create websites",b:"View web pages",c:"Store data",d:"Design images",ans:"B"},
+{q:"Which is a web browser?",a:"Google",b:"Chrome",c:"Yahoo",d:"Facebook",ans:"B"},
+{q:"Web server is used to?",a:"Display pages",b:"Store and serve web pages",c:"Design pages",d:"Browse internet",ans:"B"},
+{q:"Example of web server software?",a:"Apache",b:"Chrome",c:"HTML",d:"Windows",ans:"A"},
+{q:"Client-side programming runs on?",a:"Server",b:"Browser",c:"Database",d:"Network",ans:"B"},
+{q:"HTML is an example of?",a:"Server-side language",b:"Client-side language",c:"Database language",d:"OS language",ans:"B"},
+{q:"IDE stands for?",a:"Integrated Development Environment",b:"Internet Design Editor",c:"Internal Development Engine",d:"Integrated Design Element",ans:"A"},
+{q:"Example of HTML IDE?",a:"MS Word",b:"Notepad++",c:"Paint",d:"Calculator",ans:"B"},
+{q:"HTTP stands for?",a:"Hyper Text Transfer Protocol",b:"High Text Transfer Protocol",c:"Hyper Tool Transfer Protocol",d:"Hyperlink Text Protocol",ans:"A"},
+{q:"FTP is used for?",a:"Email",b:"File transfer",c:"Web browsing",d:"Chat",ans:"B"},
+{q:"HTTP is a?",a:"Stateless protocol",b:"Stateful protocol",c:"Secure protocol",d:"Offline protocol",ans:"A"},
+{q:"FTP works on how many connections?",a:"One",b:"Two",c:"Three",d:"None",ans:"B"},
+{q:"Client requests data from?",a:"Browser",b:"Server",c:"ISP",d:"DNS",ans:"B"},
+{q:"Server responds with?",a:"Request",b:"Error only",c:"Web page",d:"Protocol",ans:"C"},
+{q:"URL stands for?",a:"Uniform Resource Locator",b:"Universal Resource Link",c:"Uniform Reference Link",d:"Universal Reference Locator",ans:"A"},
+{q:"Which is a protocol in URL?",a:"www",b:"http",c:"html",d:"index",ans:"B"},
+{q:"Internet is?",a:"Single network",b:"Collection of networks",c:"LAN",d:"MAN",ans:"B"},
+{q:"Web pages are written using?",a:"C",b:"Java",c:"HTML",d:"Python",ans:"C"},
+{q:"Browser interprets?",a:"C code",b:"HTML code",c:"Machine code",d:"Binary",ans:"B"},
+{q:"Which is NOT a browser?",a:"Chrome",b:"Firefox",c:"Apache",d:"Edge",ans:"C"},
+{q:"Client-side scripting example?",a:"PHP",b:"Java",c:"JavaScript",d:"MySQL",ans:"C"},
+{q:"Default port of HTTP?",a:"21",b:"80",c:"443",d:"25",ans:"B"},
+
+/* ================= UNIT 2: Introduction of HTML ================= */
+
+{q:"HTML stands for?",a:"Hyper Text Markup Language",b:"High Text Markup Language",c:"Hyper Tool Mark Language",d:"Hyperlink Markup Language",ans:"A"},
+{q:"HTML is used to?",a:"Program logic",b:"Design web pages",c:"Store data",d:"Compile code",ans:"B"},
+{q:"HTML tags are written inside?",a:"{}",b:"()",c:"<>",d:"[]",ans:"C"},
+{q:"Root element of HTML page?",a:"<body>",b:"<head>",c:"<html>",d:"<title>",ans:"C"},
+{q:"<head> section contains?",a:"Content",b:"Images",c:"Metadata",d:"Tables",ans:"C"},
+{q:"<title> tag shows text on?",a:"Page body",b:"Browser tab",c:"Footer",d:"Image",ans:"B"},
+{q:"<body> tag contains?",a:"Title",b:"Scripts only",c:"Visible content",d:"Metadata",ans:"C"},
+{q:"Heading tags range from?",a:"h1-h3",b:"h1-h6",c:"h1-h5",d:"h2-h6",ans:"B"},
+{q:"<p> tag is used for?",a:"Heading",b:"Paragraph",c:"Image",d:"Link",ans:"B"},
+{q:"<br> tag is used for?",a:"Space",b:"New line",c:"New paragraph",d:"Horizontal line",ans:"B"},
+{q:"<hr> tag creates?",a:"Line break",b:"Horizontal rule",c:"Space",d:"Border",ans:"B"},
+{q:"Image tag is?",a:"<img>",b:"<image>",c:"<pic>",d:"<src>",ans:"A"},
+{q:"Image path attribute?",a:"href",b:"src",c:"alt",d:"link",ans:"B"},
+{q:"alt attribute is used for?",a:"Animation",b:"Alternate text",c:"Alignment",d:"Audio",ans:"B"},
+{q:"Marquee tag is used for?",a:"Forms",b:"Scrolling text",c:"Tables",d:"Images",ans:"B"},
+{q:"Marquee direction attribute?",a:"align",b:"move",c:"direction",d:"scroll",ans:"C"},
+{q:"HTML attributes provide?",a:"Logic",b:"Styling",c:"Extra information",d:"Compilation",ans:"C"},
+{q:"Empty tag example?",a:"<p>",b:"<h1>",c:"<br>",d:"<div>",ans:"C"},
+{q:"HTML is?",a:"Case sensitive",b:"Case insensitive",c:"Compiler based",d:"Interpreter based",ans:"B"},
+{q:"Correct HTML extension?",a:".ht",b:".hml",c:".html",d:".xml",ans:"C"},
+{q:"HTML file opens using?",a:"Compiler",b:"Browser",c:"IDE only",d:"Server only",ans:"B"},
+{q:"Attribute is written?",a:"Inside tag",b:"Outside tag",c:"In body",d:"In head only",ans:"A"},
+{q:"Multiple attributes separated by?",a:"Comma",b:"Semicolon",c:"Space",d:"Colon",ans:"C"},
+{q:"Default image alignment?",a:"Center",b:"Left",c:"Right",d:"Top",ans:"B"},
+{q:"HTML is maintained by?",a:"Microsoft",b:"W3C",c:"Google",d:"IBM",ans:"B"},
+
+/* ================= UNIT 3: Core Concepts ================= */
+
+{q:"Ordered list tag?",a:"<ul>",b:"<ol>",c:"<li>",d:"<dl>",ans:"B"},
+{q:"Unordered list uses?",a:"Numbers",b:"Alphabets",c:"Bullets",d:"Roman",ans:"C"},
+{q:"List item tag?",a:"<item>",b:"<li>",c:"<list>",d:"<ul>",ans:"B"},
+{q:"Anchor tag is?",a:"<a>",b:"<link>",c:"<href>",d:"<url>",ans:"A"},
+{q:"href attribute specifies?",a:"Text",b:"Image",c:"Link destination",d:"Color",ans:"C"},
+{q:"Target _blank opens link in?",a:"Same tab",b:"New tab",c:"Same window",d:"Frame",ans:"B"},
+{q:"Frame tag is used to?",a:"Divide page",b:"Insert image",c:"Create table",d:"Style text",ans:"A"},
+{q:"Frameset replaces?",a:"<head>",b:"<body>",c:"<html>",d:"<title>",ans:"B"},
+{q:"Table tag is?",a:"<tab>",b:"<table>",c:"<tr>",d:"<td>",ans:"B"},
+{q:"Table row tag?",a:"<td>",b:"<th>",c:"<tr>",d:"<row>",ans:"C"},
+{q:"Table data tag?",a:"<tr>",b:"<th>",c:"<td>",d:"<data>",ans:"C"},
+{q:"Table heading tag?",a:"<td>",b:"<tr>",c:"<thead>",d:"<th>",ans:"D"},
+{q:"colspan attribute merges?",a:"Rows",b:"Columns",c:"Text",d:"Cells",ans:"B"},
+{q:"rowspan merges?",a:"Columns",b:"Rows",c:"Cells",d:"Tables",ans:"B"},
+{q:"Form tag is?",a:"<input>",b:"<form>",c:"<data>",d:"<submit>",ans:"B"},
+{q:"Form method attribute?",a:"GET",b:"POST",c:"Both",d:"None",ans:"C"},
+{q:"Password input type?",a:"text",b:"hidden",c:"password",d:"secure",ans:"C"},
+{q:"Radio button allows?",a:"Multiple selection",b:"Single selection",c:"No selection",d:"Text",ans:"B"},
+{q:"Checkbox allows?",a:"Single",b:"Multiple",c:"Text",d:"Number",ans:"B"},
+{q:"Submit button type?",a:"reset",b:"submit",c:"button",d:"send",ans:"B"},
+
+/* ================= UNIT 4: HTML5 ================= */
+
+{q:"HTML5 introduced to?",a:"Replace CSS",b:"Improve HTML",c:"Remove JS",d:"Replace browsers",ans:"B"},
+{q:"HTML5 maintained by?",a:"IEEE",b:"ISO",c:"W3C",d:"Google",ans:"C"},
+{q:"Semantic tag example?",a:"<div>",b:"<span>",c:"<section>",d:"<font>",ans:"C"},
+{q:"Canvas tag is used for?",a:"Drawing graphics",b:"Tables",c:"Forms",d:"Links",ans:"A"},
+{q:"HTML5 doctype is?",a:"Long",b:"Complex",c:"Simple",d:"Optional",ans:"C"},
+{q:"HTML5 best used for?",a:"Static pages",b:"Dynamic multimedia pages",c:"Database",d:"OS",ans:"B"}
+
+];
+/* ===== QUIZ LOGIC ===== */
+const TOTAL_QUESTIONS = 10;
+const quizData = questionBank.sort(()=>Math.random()-0.5).slice(0,TOTAL_QUESTIONS);
+
+let index = 0;
+let userAns = [];
+
+function loadQuestion(){
+  const q = quizData[index];
+  document.getElementById("question").innerText = (index+1)+". "+q.q;
+  document.getElementById("a").innerText = q.a;
+  document.getElementById("b").innerText = q.b;
+  document.getElementById("c").innerText = q.c;
+  document.getElementById("d").innerText = q.d;
+
+  document.querySelectorAll("input[name='opt']").forEach(r=>{
+    r.checked = userAns[index] === r.value;
+  });
+}
+
+function saveAnswer(){
+  const sel = document.querySelector("input[name='opt']:checked");
+  if(sel) userAns[index] = sel.value;
+}
+
+function nextQuestion(){
+  saveAnswer();
+  if(index < quizData.length-1){
+    index++;
+    loadQuestion();
+  }else{
+    showResult();
+  }
+}
+
+function prevQuestion(){
+  saveAnswer();
+  if(index>0){
+    index--;
+    loadQuestion();
+  }
+}
+
+function showResult(){
+  document.getElementById("quiz").classList.add("hide");
+  document.getElementById("result").classList.remove("hide");
+
+  let correct=0;
+  quizData.forEach((q,i)=>{
+    if(userAns[i]===q.ans) correct++;
+  });
+
+  document.getElementById("total").innerText = quizData.length;
+  document.getElementById("correct").innerText = correct;
+  document.getElementById("wrong").innerText = quizData.length - correct;
+}
+
+loadQuestion();
+</script>
+
+</body>
+</html>
