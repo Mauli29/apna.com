@@ -1,31 +1,19 @@
-// Toggle mobile menu
-function toggleMenu(){
-  document.getElementById("mobileMenu").classList.toggle("active");
-}
+function openNotes(btn) {
+    const card = btn.closest(".course-card");
+    const select = card.querySelector(".semester-select");
+    const semester = select.value;
+    const course = select.dataset.course;
 
-// Function to open notes page based on course & semester
-function openNotes(btn){
-  const card = btn.closest('.course-card');
-  const select = card.querySelector('.semester-select');
-  const semester = select.value;
-  const course = select.dataset.course;
-
-  if(!semester){
-    alert("Please select a semester!");
-    return;
-  }
-
-  // Mapping for all courses and semesters
-  const pageMap = {
-    "bcs": {
-      "Semester 1": "1sembcs.html",
-      "Semester 2": "2sembcs.html",
-      "Semester 3": "3sembcs.html",
-      "Semester 4": "4sembcs.html",
-      "Semester 5": "5sembcs.html",
-      "Semester 6": "6thsem.html",
-      "Semester 7": "7sembcs.html",
-      "Semester 8": "8sembcs.html"
+    const notes = {
+        "bcs": {
+      "Semester 1": "../bcs/1sembcs.html",
+      "Semester 2": "../bcs/2sembcs.html",
+      "Semester 3": "../bcs/3sembcs.html",
+      "Semester 4": "../bcs/4sembcs.html",
+      "Semester 5": "../bcs/5sembcs.html",
+      "Semester 6": "../bcs/6thsem.html",
+      "Semester 7": "bcs-semester-7.html",
+      "Semester 8": "bcs-semester-8.html"
     },
     "bca": {
       "Semester 1": "bca-semester-1.html",
@@ -69,11 +57,9 @@ function openNotes(btn){
     }
   };
 
-  // Open the corresponding page
-  const url = pageMap[course][semester];
-  if(url){
-    window.open(url, "_blank");
-  }else{
-    alert("Page not found for selected semester!");
-  }
+ if (notes[course] && notes[course][semester]) {
+        window.location.href = notes[course][semester];
+    } else {
+        alert("Please select valid semester");
+    }
 }
